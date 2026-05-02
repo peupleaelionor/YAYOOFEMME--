@@ -3,10 +3,12 @@ import { stripe } from '@/lib/stripe'
 import { createClient } from '@supabase/supabase-js'
 import type Stripe from 'stripe'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+function getAdminClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 export async function POST(request: NextRequest) {
   const body = await request.text()
@@ -35,8 +37,10 @@ export async function POST(request: NextRequest) {
 
       if (!userId) break
 
+      const db = getAdminClient()
+
       if (type === 'subscription' && plan) {
-        await supabase.from('subscriptions').upsert({
+        await db.from('subscriptions').upsert({
           user_id: userId,
           stripe_customer_id: session.customer as string,
           stripe_subscription_id: session.subscription as string,
@@ -47,7 +51,7 @@ export async function POST(request: NextRequest) {
       }
 
       if (type === 'ebook' && ebookId) {
-        await supabase.from('ebook_purchases').insert({
+        await db.from('ebook_purchases').insert({
           user_id: userId,
           ebook_id: ebookId,
           stripe_payment_id: session.payment_intent as string,
@@ -56,7 +60,7 @@ export async function POST(request: NextRequest) {
       }
 
       if (type === 'one_shot' && module) {
-        await supabase.from('one_shot_orders').insert({
+        await db.from('one_shot_orders').insert({
           user_id: userId,
           type: module,
           amount: (session.amount_total ?? 0) / 100,
@@ -66,7 +70,7 @@ export async function POST(request: NextRequest) {
         })
 
         if (resultId) {
-          await supabase.from('recommendations')
+          await db.from('recommendations')
             .update({ is_paid: true })
             .eq('id', resultId)
         }
@@ -80,12 +84,13 @@ export async function POST(request: NextRequest) {
       const status = subscription.status === 'active' ? 'active' :
         subscription.status === 'canceled' ? 'canceled' : 'past_due'
 
-      // In Stripe API 2026-04-22.dahlia, current_period_end is on SubscriptionItem
+      // In API version 2026-04-22.dahlia, current_period_end lives on each
+      // SubscriptionItem rather than on the Subscription root object.
       const periodEnd = subscription.items?.data[0]?.current_period_end
         ?? subscription.cancel_at
         ?? subscription.ended_at
 
-      await supabase.from('subscriptions')
+      await getAdminClient().from('subscriptions')
         .update({
           status,
           current_period_end: periodEnd ? new Date(periodEnd * 1000).toISOString() : null,

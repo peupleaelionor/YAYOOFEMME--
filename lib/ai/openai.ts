@@ -1,8 +1,10 @@
 import OpenAI from 'openai'
 
-export const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+function getOpenAIClient() {
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  })
+}
 
 export const AI_SYSTEM_PROMPT = `Tu es une assistante d'achat féminine premium. Tu aides à choisir des produits mode, beauté, parfum, bijoux, maison et cadeaux. Tu ne dois jamais inventer de produits. Tu dois uniquement recommander les produits fournis dans le contexte. Tu dois être claire, utile, élégante, non culpabilisante. Tu ne fais aucun diagnostic médical. Tu ne promets aucun résultat santé. Tu expliques pourquoi chaque produit correspond au style, budget, occasion et préférences de l'utilisatrice.`
 
@@ -20,7 +22,7 @@ ${products.map((p, i) => `${i + 1}. ${p.name} par ${p.brand ?? 'N/A'} - ${p.pric
 
 Explique en 2-3 phrases pourquoi cette sélection correspond bien au profil de cette femme. Sois chaleureuse, précise et utile. Ne mentionne pas les scores techniques.`
 
-  const response = await openai.chat.completions.create({
+  const response = await getOpenAIClient().chat.completions.create({
     model: 'gpt-4o-mini',
     messages: [
       { role: 'system', content: AI_SYSTEM_PROMPT },

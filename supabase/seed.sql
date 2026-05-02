@@ -7,12 +7,12 @@
 -- EBOOKS
 insert into ebooks (title, slug, description, price, is_free, is_premium, category)
 values
-  ('Le Guide Ultime du Style Capsule', 'guide-style-capsule', 'Construisez une garde-robe intemporelle avec seulement 30 pièces essentielles.', 0, true, false, 'style'),
-  ('Skincare Naturelle : Les 10 Actifs Essentiels', 'skincare-naturelle-actifs', 'Décryptez les ingrédients clés pour une peau éclatante au naturel.', 9.99, false, false, 'beauty'),
-  ('Parfums : Trouver Sa Signature Olfactive', 'parfums-signature-olfactive', 'Guide complet pour choisir un parfum qui vous ressemble vraiment.', 9.99, false, false, 'perfume'),
+  ('Le Guide Ultime du Style Capsule', 'guide-style-capsule', 'Construis une garde-robe intemporelle avec seulement 30 pièces essentielles.', 0, true, false, 'style'),
+  ('Skincare Naturelle : Les 10 Actifs Essentiels', 'skincare-naturelle-actifs', 'Décrypte les ingrédients clés pour une peau éclatante au naturel.', 9.99, false, false, 'beauty'),
+  ('Parfums : Trouver Sa Signature Olfactive', 'parfums-signature-olfactive', 'Guide complet pour choisir un parfum qui te ressemble vraiment.', 9.99, false, false, 'perfume'),
   ('La Bible des Cadeaux Féminins', 'bible-cadeaux-feminins', 'Plus de 100 idées cadeaux pour toutes les occasions et tous les budgets.', 14.99, false, false, 'gifts'),
   ('Mode Éthique & Durable : Par Où Commencer ?', 'mode-ethique-durable', 'Conseils pratiques pour adopter une consommation de mode plus responsable.', 0, true, false, 'style'),
-  ('Maquillage Naturel : Techniques Pro', 'maquillage-naturel-techniques', 'Maîtrisez les techniques de maquillage nude et naturel comme une experte.', 12.99, false, true, 'beauty'),
+  ('Maquillage Naturel : Techniques Pro', 'maquillage-naturel-techniques', 'Maîtrise les techniques de maquillage nude et naturel comme une experte.', 12.99, false, true, 'beauty'),
   ('Tendances Mode 2025 : Le Décryptage', 'tendances-mode-2025', 'Analyse complète des tendances qui vont dominer la saison.', 7.99, false, false, 'style');
 
 -- PRODUCTS (100 items across categories)
