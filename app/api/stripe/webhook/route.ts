@@ -80,10 +80,15 @@ export async function POST(request: NextRequest) {
       const status = subscription.status === 'active' ? 'active' :
         subscription.status === 'canceled' ? 'canceled' : 'past_due'
 
+      // In Stripe API 2026-04-22.dahlia, current_period_end is on SubscriptionItem
+      const periodEnd = subscription.items?.data[0]?.current_period_end
+        ?? subscription.cancel_at
+        ?? subscription.ended_at
+
       await supabase.from('subscriptions')
         .update({
           status,
-          current_period_end: new Date((subscription as unknown as { current_period_end: number }).current_period_end * 1000).toISOString(),
+          current_period_end: periodEnd ? new Date(periodEnd * 1000).toISOString() : null,
         })
         .eq('stripe_subscription_id', subscription.id)
       break
