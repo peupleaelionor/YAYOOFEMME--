@@ -1,5 +1,7 @@
 export interface Database {
   public: {
+    // Required by @supabase/supabase-js v2.105+ / @supabase/postgrest-js v2.x
+    // See: https://github.com/supabase/supabase-js/releases
     PostgrestVersion: "12"
     Tables: {
       products: {

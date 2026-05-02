@@ -1,5 +1,7 @@
 -- ============================================================
--- Yayoo Femme - Seed Data
+-- Yayoo Femme - Seed Data (development/staging only)
+-- NOTE: product_url and affiliate_url use '#' as placeholder.
+-- Replace with real URLs before going to production.
 -- ============================================================
 
 -- EBOOKS
