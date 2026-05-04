@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ScoreBar } from '@/components/ui/score-bar'
@@ -15,6 +16,9 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, showScores = false, onWishlist, onBuy }: ProductCardProps) {
+  const [wishlisted, setWishlisted] = useState(false)
+  const [wishlistLoading, setWishlistLoading] = useState(false)
+
   const handleBuy = async () => {
     if (onBuy) {
       onBuy(product)
@@ -29,6 +33,29 @@ export function ProductCard({ product, showScores = false, onWishlist, onBuy }: 
 
     const url = product.affiliate_url ?? product.product_url
     if (url) window.open(url, '_blank', 'noopener,noreferrer')
+  }
+
+  const handleWishlist = async () => {
+    if (onWishlist) {
+      onWishlist(product)
+      return
+    }
+    setWishlistLoading(true)
+    try {
+      const res = await fetch('/api/wishlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId: product.id }),
+      })
+      if (res.ok) {
+        const { action } = await res.json()
+        setWishlisted(action === 'added')
+      }
+    } catch {
+      // ignore
+    } finally {
+      setWishlistLoading(false)
+    }
   }
 
   return (
@@ -63,11 +90,18 @@ export function ProductCard({ product, showScores = false, onWishlist, onBuy }: 
 
         {/* Wishlist button */}
         <button
-          className="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-[0_2px_20px_rgba(0,0,0,0.06)] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white cursor-pointer"
-          onClick={() => onWishlist?.(product)}
-          aria-label="Ajouter à ma wishlist"
+          className="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-[0_2px_20px_rgba(0,0,0,0.06)] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white cursor-pointer disabled:opacity-50"
+          onClick={handleWishlist}
+          disabled={wishlistLoading}
+          aria-label={wishlisted ? 'Retirer de ma wishlist' : 'Ajouter à ma wishlist'}
         >
-          <svg className="w-4 h-4 text-[#C9978A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg
+            className="w-4 h-4 text-[#C9978A]"
+            fill={wishlisted ? 'currentColor' : 'none'}
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
           </svg>
         </button>

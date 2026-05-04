@@ -1,10 +1,6 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Bons plans mode & beauté',
-  description: 'Les meilleures promotions, codes promo et offres flash mode, beauté et cadeaux sélectionnés par Yayoo Femme.',
-}
+import { useState } from 'react'
 
 const deals = [
   { brand: 'Sephora', discount: '-20%', description: 'Sur toute la gamme skincare Caudalie', expires: '30/12/2025', badge: '🔥 Flash', href: '#' },
@@ -16,6 +12,28 @@ const deals = [
 ]
 
 export default function DealsPage() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('loading')
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: 'deals' }),
+      })
+      if (res.ok) {
+        setStatus('success')
+        setEmail('')
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
+  }
   return (
     <div className="min-h-screen bg-[#FAF8F5]">
       {/* Header */}
@@ -71,14 +89,26 @@ export default function DealsPage() {
             <p className="text-[#8C7B6B] mb-6 text-sm">
               Reçois les meilleures offres chaque semaine directement dans ta boîte mail.
             </p>
-            <form className="flex flex-col sm:flex-row gap-3" action="#">
+            <form className="flex flex-col sm:flex-row gap-3" onSubmit={handleNewsletterSubmit}>
               <input
                 type="email"
                 placeholder="ton@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
                 className="flex-1 px-4 py-3 bg-[#FAF8F5] border border-[#EDE4D6] rounded-full text-sm focus:outline-none focus:border-[#C9978A]"
               />
-              <button type="submit" className="btn-accent whitespace-nowrap">S&apos;abonner</button>
+              <button
+                type="submit"
+                disabled={status === 'loading' || status === 'success'}
+                className="btn-accent whitespace-nowrap disabled:opacity-60"
+              >
+                {status === 'loading' ? 'Inscription...' : status === 'success' ? '✓ Inscrite !' : "S'abonner"}
+              </button>
             </form>
+            {status === 'error' && (
+              <p className="text-xs text-red-500 mt-2">Une erreur est survenue. Réessaie.</p>
+            )}
             <p className="text-xs text-[#8C7B6B] mt-3">Sans spam · Désabonnement en 1 clic</p>
           </div>
         </div>

@@ -35,6 +35,13 @@ const modules = [
     href: '/perfume',
     color: 'bg-[#F2E8E4]',
   },
+  {
+    icon: '👘',
+    title: 'Dressing Capsule',
+    description: '30 pièces essentielles pour un dressing cohérent et stylé.',
+    href: '/capsule',
+    color: 'bg-[#EDE4D6]',
+  },
 ]
 
 const howItWorks = [
@@ -102,6 +109,18 @@ export default function HomePage() {
           <p className="mt-6 text-sm text-[#8C7B6B]">
             Gratuit · Aucune inscription requise · 2 minutes
           </p>
+          <div className="mt-10 grid grid-cols-3 gap-8 max-w-lg mx-auto border-t border-[#EDE4D6] pt-10">
+            {[
+              { value: '50 000+', label: 'Femmes accompagnées' },
+              { value: '5', label: 'Modules IA' },
+              { value: '4.8/5', label: 'Note moyenne' },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="font-serif text-2xl font-semibold text-[#1A1A1A]">{stat.value}</div>
+                <div className="text-xs text-[#8C7B6B] mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -110,13 +129,13 @@ export default function HomePage() {
         <div className="container-wide">
           <div className="text-center mb-14">
             <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A] mb-4">
-              4 assistantes pour chaque besoin
+              5 assistantes pour chaque besoin
             </h2>
             <p className="text-[#8C7B6B] max-w-xl mx-auto">
               Chaque outil est conçu pour t&apos;aider à trouver exactement ce dont tu as besoin.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {modules.map((mod) => (
               <Link key={mod.href} href={mod.href} className="card-hover p-8 text-center group block">
                 <div className={`w-16 h-16 ${mod.color} rounded-2xl flex items-center justify-center text-3xl mx-auto mb-5 transition-transform duration-300 group-hover:scale-110`}>
@@ -147,6 +166,63 @@ export default function HomePage() {
                 <div className="font-serif text-5xl text-[#EDE4D6] mb-4">{item.step}</div>
                 <h3 className="font-semibold text-[#1A1A1A] mb-2">{item.title}</h3>
                 <p className="text-sm text-[#8C7B6B] leading-relaxed">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="section bg-white">
+        <div className="container-wide">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#F2E8E4] rounded-full text-sm text-[#A67060] mb-6">
+              <span>⭐⭐⭐⭐⭐</span>
+              <span>Avis vérifiés</span>
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A] mb-4">
+              Ce qu&apos;elles en pensent
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                name: 'Sophie M.',
+                age: '32 ans',
+                text: "J'ai enfin trouvé ma routine beauté idéale après des années à tâtonner. L'IA a cerné mon profil en 2 minutes chrono. Impressionnant !",
+                module: 'Beauty Finder',
+              },
+              {
+                name: 'Camille D.',
+                age: '27 ans',
+                text: "Le Style Finder m'a suggéré des looks que je n'aurais jamais osé tenter seule. Résultat : je reçois des compliments tous les jours.",
+                module: 'Style Finder',
+              },
+              {
+                name: 'Marie-Laure T.',
+                age: '45 ans',
+                text: "J'ai offert un cadeau parfait grâce à Yayoo Femme. La personne était bluffée que je la connaisse si bien. Le secret : le Gift Finder !",
+                module: 'Gift Finder',
+              },
+            ].map((testimonial) => (
+              <div key={testimonial.name} className="card p-6">
+                <div className="flex items-center gap-1 text-[#C9978A] mb-4">
+                  {'★★★★★'.split('').map((star, i) => (
+                    <span key={i} className="text-sm">{star}</span>
+                  ))}
+                </div>
+                <p className="text-[#2C2C2C] leading-relaxed mb-5 text-sm">
+                  &ldquo;{testimonial.text}&rdquo;
+                </p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-[#1A1A1A] text-sm">{testimonial.name}</p>
+                    <p className="text-xs text-[#8C7B6B]">{testimonial.age}</p>
+                  </div>
+                  <span className="text-xs bg-[#F2E8E4] text-[#A67060] px-2 py-1 rounded-full">
+                    {testimonial.module}
+                  </span>
+                </div>
               </div>
             ))}
           </div>

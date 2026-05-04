@@ -6,17 +6,50 @@ import { Button } from '@/components/ui/button'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
 
+interface Subscription {
+  plan: string | null
+  status: string | null
+  current_period_end: string | null
+}
+
+
 export default function AccountPage() {
   const [user, setUser] = useState<User | null>(null)
+  const [subscription, setSubscription] = useState<Subscription | null>(null)
+  const [orderCount, setOrderCount] = useState(0)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const supabase = createClient()
-    supabase.auth.getUser().then(({ data: { user } }) => {
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
       setUser(user)
+      if (user) {
+        const [{ data: sub }, { count }] = await Promise.all([
+          supabase
+            .from('subscriptions')
+            .select('plan, status, current_period_end')
+            .eq('user_id', user.id)
+            .eq('status', 'active')
+            .maybeSingle(),
+          supabase
+            .from('one_shot_orders')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', user.id),
+        ])
+        setSubscription(sub ?? null)
+        setOrderCount(count ?? 0)
+      }
       setLoading(false)
     })
   }, [])
+
+  const PLAN_LABELS: Record<string, string> = {
+    basic: 'Basic — 4,90€/mois',
+    plus: 'Plus — 9,90€/mois',
+    premium: 'Premium — 19,90€/mois',
+  }
+
+  const planLabel = subscription?.plan ? PLAN_LABELS[subscription.plan] ?? subscription.plan : null
 
   if (loading) {
     return (
@@ -80,16 +113,42 @@ export default function AccountPage() {
                   {user.created_at ? new Date(user.created_at).toLocaleDateString('fr-FR') : '—'}
                 </p>
               </div>
+              <div>
+                <label className="text-xs text-[#8C7B6B] uppercase tracking-wider">Commandes</label>
+                <p className="text-sm text-[#1A1A1A] mt-0.5">{orderCount}</p>
+              </div>
             </div>
           </div>
 
           {/* Subscription card */}
           <div className="card p-6">
             <h2 className="font-serif text-xl text-[#1A1A1A] mb-4">Abonnement</h2>
-            <p className="text-sm text-[#8C7B6B] mb-4">Aucun abonnement actif</p>
-            <Link href="/pricing">
-              <Button variant="outline" size="sm">Voir les offres</Button>
-            </Link>
+            {subscription ? (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-green-500" />
+                  <span className="text-sm font-medium text-[#1A1A1A]">
+                    {planLabel}
+                  </span>
+                </div>
+                {subscription.current_period_end && (
+                  <p className="text-xs text-[#8C7B6B]">
+                    Renouvellement le{' '}
+                    {new Date(subscription.current_period_end).toLocaleDateString('fr-FR')}
+                  </p>
+                )}
+                <Link href="/pricing">
+                  <Button variant="outline" size="sm" className="mt-2">Gérer mon abonnement</Button>
+                </Link>
+              </div>
+            ) : (
+              <>
+                <p className="text-sm text-[#8C7B6B] mb-4">Aucun abonnement actif</p>
+                <Link href="/pricing">
+                  <Button variant="outline" size="sm">Voir les offres</Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Quick actions */}
@@ -104,6 +163,15 @@ export default function AccountPage() {
               </Link>
               <Link href="/gifts" className="flex items-center gap-3 text-sm text-[#2C2C2C] hover:text-[#C9978A] transition-colors">
                 <span>🎁</span> Gift Finder
+              </Link>
+              <Link href="/perfume" className="flex items-center gap-3 text-sm text-[#2C2C2C] hover:text-[#C9978A] transition-colors">
+                <span>🌹</span> Perfume Finder
+              </Link>
+              <Link href="/capsule" className="flex items-center gap-3 text-sm text-[#2C2C2C] hover:text-[#C9978A] transition-colors">
+                <span>👘</span> Dressing Capsule
+              </Link>
+              <Link href="/account/wishlist" className="flex items-center gap-3 text-sm text-[#2C2C2C] hover:text-[#C9978A] transition-colors">
+                <span>❤️</span> Ma wishlist
               </Link>
               <Link href="/guides" className="flex items-center gap-3 text-sm text-[#2C2C2C] hover:text-[#C9978A] transition-colors">
                 <span>📖</span> Mes guides
