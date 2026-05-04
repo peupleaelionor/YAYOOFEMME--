@@ -22,6 +22,7 @@ export function Footer() {
                 { label: 'Beauty Finder', href: '/beauty' },
                 { label: 'Gift Finder', href: '/gifts' },
                 { label: 'Perfume Finder', href: '/perfume' },
+                { label: 'Dressing Capsule', href: '/capsule' },
                 { label: 'Bons plans', href: '/deals' },
               ].map((item) => (
                 <li key={item.href}>

@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
       beauty: ['beaute', 'skincare', 'cheveux', 'self-care'],
       gift: ['mode', 'bijoux', 'parfum', 'accessoires', 'beaute', 'maison', 'cadeaux'],
       perfume: ['parfum'],
+      capsule: ['mode', 'chaussures', 'accessoires', 'bijoux'],
     }
 
     const categories = categoryMap[module] ?? ['mode']

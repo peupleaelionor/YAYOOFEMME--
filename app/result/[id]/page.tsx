@@ -20,6 +20,7 @@ const MODULE_LABELS: Record<string, string> = {
   beauty: 'Beauty Finder',
   gift: 'Gift Finder',
   perfume: 'Perfume Finder',
+  capsule: 'Dressing Capsule',
 }
 
 export default function ResultPage() {

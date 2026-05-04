@@ -10,6 +10,7 @@ const navigation = [
   { label: 'Beauté', href: '/beauty' },
   { label: 'Cadeaux', href: '/gifts' },
   { label: 'Parfum', href: '/perfume' },
+  { label: 'Capsule', href: '/capsule' },
   { label: 'Bons plans', href: '/deals' },
   { label: 'Guides', href: '/guides' },
 ]
