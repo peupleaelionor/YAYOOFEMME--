@@ -23,7 +23,7 @@ export function ProductCard({ product, showScores = false, onWishlist, onBuy }: 
     fetch(`/api/wishlist?productId=${encodeURIComponent(product.id)}`)
       .then((r) => r.ok ? r.json() : null)
       .then((data) => { if (data) setWishlisted(data.inWishlist === true) })
-      .catch(() => {})
+      .catch((err) => { if (process.env.NODE_ENV === 'development') console.warn('Wishlist check failed:', err) })
   }, [product.id])
 
   const handleBuy = async () => {
