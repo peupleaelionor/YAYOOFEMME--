@@ -1,360 +1,276 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { BadgeCheck, BookOpen, Gift, Heart, Lock, Search, ShieldCheck, Shirt, Sparkles, Star, Wand2 } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: "Yayoo Femme - Assistant d'achat féminin intelligent",
-  description: "Trouve ce qui te correspond vraiment. Mode, beauté, parfum, cadeaux selon ton style, ton budget et ton moment de vie.",
+  title: 'Yayoo Femme — YYFMM, assistant shopping féminin intelligent',
+  description: "Mode, beauté, parfum et cadeaux : Yayoo Femme recommande des idées adaptées à ton style, ton budget et tes envies.",
 }
 
 const modules = [
   {
-    icon: '👗',
+    icon: Shirt,
     title: 'Style Finder',
-    description: 'Trouve ton look parfait selon ton style, occasion et budget.',
+    description: 'Trouve ton look idéal selon ton style, ton occasion et ton budget.',
     href: '/style',
-    color: 'bg-[#F2E8E4]',
+    image: '/brand/yyfmm-style.svg',
   },
   {
-    icon: '✨',
+    icon: Sparkles,
     title: 'Beauty Finder',
-    description: 'Ta routine beauté idéale selon ta peau et tes préférences.',
+    description: 'Ta routine beauté personnalisée selon ta peau et tes préférences.',
     href: '/beauty',
-    color: 'bg-[#EDE4D6]',
+    image: '/brand/yyfmm-beauty.svg',
   },
   {
-    icon: '🎁',
+    icon: Gift,
     title: 'Gift Finder',
     description: 'Le cadeau parfait pour chaque femme et chaque occasion.',
     href: '/gifts',
-    color: 'bg-[#F5F0E8]',
+    image: '/brand/yyfmm-gift.svg',
   },
   {
-    icon: '🌹',
+    icon: Wand2,
     title: 'Perfume Finder',
-    description: 'Ton parfum signature selon ta personnalité et tes envies.',
+    description: 'Ton parfum signature selon ta personnalité, ta peau et tes envies.',
     href: '/perfume',
-    color: 'bg-[#F2E8E4]',
+    image: '/brand/yyfmm-perfume.svg',
   },
   {
-    icon: '👘',
+    icon: Heart,
     title: 'Dressing Capsule',
-    description: '30 pièces essentielles pour un dressing cohérent et stylé.',
+    description: '30 pièces essentielles pour un dressing cohérent, élégant et facile à porter.',
     href: '/capsule',
-    color: 'bg-[#EDE4D6]',
+    image: '/brand/yyfmm-capsule.svg',
   },
 ]
 
-const howItWorks = [
+const guides = [
+  { title: 'Le dressing capsule parfait', category: 'Mode', price: '9€', href: '/guides' },
+  { title: 'Routine beauté naturelle', category: 'Beauté', price: '7€', href: '/guides' },
+  { title: '50 idées cadeaux pour femme', category: 'Cadeaux', price: 'Gratuit', href: '/guides' },
+  { title: 'Le guide des parfums signature', category: 'Parfum', price: '9€', href: '/guides' },
+]
+
+const offers = [
   {
-    step: '01',
-    title: 'Réponds aux questions',
-    description: 'Un quiz rapide (2 min) pour comprendre ton style, tes besoins et ton budget.',
+    name: 'Découverte',
+    price: 'Gratuit',
+    description: 'Pour tester les finders et récupérer des idées rapides.',
+    features: ['Finders de base', 'Idées cadeaux', 'Sélection courte', 'Liens affiliés signalés'],
+    cta: 'Commencer',
+    href: '/style',
   },
   {
-    step: '02',
-    title: "L'IA analyse ton profil",
-    description: 'Notre algorithme croise tes réponses avec notre catalogue de milliers de produits.',
+    name: 'Premium',
+    price: '7€/mois',
+    description: 'Le meilleur choix pour préparer la phase shopping réelle.',
+    features: ['Sélections personnalisées', 'Guides inclus', 'Alertes bons plans', 'Wishlist sauvegardée'],
+    cta: 'Choisir Premium',
+    href: '/pricing',
+    featured: true,
   },
   {
-    step: '03',
-    title: 'Reçois ta sélection',
-    description: 'Une sélection personnalisée avec des explications claires pour chaque produit.',
+    name: 'Experte',
+    price: '19€/mois',
+    description: 'Pour une expérience plus avancée, style + beauté + cadeaux.',
+    features: ['Capsules avancées', 'Recommandations détaillées', 'Priorité nouveautés', 'Préparation looks complets'],
+    cta: 'Voir Experte',
+    href: '/pricing',
   },
 ]
 
-const faqs = [
-  {
-    q: "Les recommandations sont-elles vraiment personnalisées ?",
-    a: "Oui. Notre IA analyse chaque réponse de ton quiz pour ne sélectionner que les produits qui correspondent à ton profil exact – style, budget, occasion, saison.",
-  },
-  {
-    q: "Yayoo Femme est-il gratuit ?",
-    a: "Les recommandations de base sont gratuites. Pour accéder aux sélections complètes et aux fonctionnalités premium, des offres à partir de 3,90€ sont disponibles.",
-  },
-  {
-    q: "Y a-t-il des liens affiliés sur le site ?",
-    a: "Certains liens sont des liens affiliés. Si tu achètes via ces liens, nous touchons une petite commission, sans coût supplémentaire pour toi. Cela nous permet de continuer à améliorer la plateforme.",
-  },
-  {
-    q: "Comment puis-je sauvegarder mes recommandations ?",
-    a: "En créant un compte (gratuit), tu peux sauvegarder tes sélections, créer une wishlist et recevoir de nouvelles recommandations selon l'évolution de tes goûts.",
-  },
+const affiliatePartners = [
+  'Mode',
+  'Beauté',
+  'Parfum',
+  'Bijoux',
+  'Cadeaux',
+  'Maison',
 ]
 
 export default function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="section gradient-soft">
-        <div className="container-tight text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#F2E8E4] rounded-full text-sm text-[#A67060] mb-8">
-            <span>✨</span>
-            <span>L&apos;assistante shopping 100% féminine</span>
-          </div>
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl text-[#1A1A1A] mb-6 text-balance">
-            Shopping intelligent,{' '}
-            <span className="text-[#C9978A]">fait pour toi</span>
-          </h1>
-          <p className="text-lg md:text-xl text-[#8C7B6B] mb-10 max-w-2xl mx-auto leading-relaxed">
-            Mode, beauté, parfum, cadeaux. Notre IA te recommande exactement ce qui te correspond selon ton style, ton budget et ton moment de vie.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/style" className="btn-primary">
-              Trouver mon style →
-            </Link>
-            <Link href="/beauty" className="btn-secondary">
-              Ma routine beauté
-            </Link>
-          </div>
-          <p className="mt-6 text-sm text-[#8C7B6B]">
-            Gratuit · Aucune inscription requise · 2 minutes
-          </p>
-          <div className="mt-10 grid grid-cols-3 gap-8 max-w-lg mx-auto border-t border-[#EDE4D6] pt-10">
-            {[
-              { value: '50 000+', label: 'Femmes accompagnées' },
-              { value: '5', label: 'Modules IA' },
-              { value: '4.8/5', label: 'Note moyenne' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="font-serif text-2xl font-semibold text-[#1A1A1A]">{stat.value}</div>
-                <div className="text-xs text-[#8C7B6B] mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Modules */}
-      <section className="section bg-white">
-        <div className="container-wide">
-          <div className="text-center mb-14">
-            <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A] mb-4">
-              5 assistantes pour chaque besoin
-            </h2>
-            <p className="text-[#8C7B6B] max-w-xl mx-auto">
-              Chaque outil est conçu pour t&apos;aider à trouver exactement ce dont tu as besoin.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {modules.map((mod) => (
-              <Link key={mod.href} href={mod.href} className="card-hover p-8 text-center group block">
-                <div className={`w-16 h-16 ${mod.color} rounded-2xl flex items-center justify-center text-3xl mx-auto mb-5 transition-transform duration-300 group-hover:scale-110`}>
-                  {mod.icon}
-                </div>
-                <h3 className="font-serif text-xl text-[#1A1A1A] mb-2">{mod.title}</h3>
-                <p className="text-sm text-[#8C7B6B] leading-relaxed">{mod.description}</p>
-                <div className="mt-5 text-sm font-medium text-[#C9978A] group-hover:text-[#A67060] transition-colors">
-                  Commencer →
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="section bg-[#FAF8F5]">
-        <div className="container-tight">
-          <div className="text-center mb-14">
-            <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A] mb-4">
-              Comment ça marche ?
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {howItWorks.map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="font-serif text-5xl text-[#EDE4D6] mb-4">{item.step}</div>
-                <h3 className="font-semibold text-[#1A1A1A] mb-2">{item.title}</h3>
-                <p className="text-sm text-[#8C7B6B] leading-relaxed">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="section bg-white">
-        <div className="container-wide">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#F2E8E4] rounded-full text-sm text-[#A67060] mb-6">
-              <span>⭐⭐⭐⭐⭐</span>
-              <span>Avis vérifiés</span>
+      <section className="gradient-soft overflow-hidden border-b border-[#EADFD6]">
+        <div className="container-wide grid min-h-[calc(100vh-72px)] items-center gap-10 py-14 md:grid-cols-[1.02fr_0.98fr] md:py-20">
+          <div className="max-w-3xl">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#E8C6BD] bg-white/70 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[#A7645D] shadow-sm">
+              <Sparkles className="h-4 w-4" /> YYFMM — assistant shopping féminin
             </div>
-            <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A] mb-4">
-              Ce qu&apos;elles en pensent
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                name: 'Sophie M.',
-                age: '32 ans',
-                text: "J'ai enfin trouvé ma routine beauté idéale après des années à tâtonner. L'IA a cerné mon profil en 2 minutes chrono. Impressionnant !",
-                module: 'Beauty Finder',
-              },
-              {
-                name: 'Camille D.',
-                age: '27 ans',
-                text: "Le Style Finder m'a suggéré des looks que je n'aurais jamais osé tenter seule. Résultat : je reçois des compliments tous les jours.",
-                module: 'Style Finder',
-              },
-              {
-                name: 'Marie-Laure T.',
-                age: '45 ans',
-                text: "J'ai offert un cadeau parfait grâce à Yayoo Femme. La personne était bluffée que je la connaisse si bien. Le secret : le Gift Finder !",
-                module: 'Gift Finder',
-              },
-            ].map((testimonial) => (
-              <div key={testimonial.name} className="card p-6">
-                <div className="flex items-center gap-1 text-[#C9978A] mb-4">
-                  {'★★★★★'.split('').map((star, i) => (
-                    <span key={i} className="text-sm">{star}</span>
-                  ))}
+            <h1 className="text-balance font-serif text-5xl leading-[0.92] text-[#171717] sm:text-6xl md:text-7xl lg:text-8xl">
+              Ton assistant beauté, mode & cadeaux intelligent
+            </h1>
+            <p className="mt-7 max-w-2xl text-lg font-medium leading-relaxed text-[#8B7B70] md:text-xl">
+              Des recommandations personnalisées pour trouver le bon look, la bonne routine, le bon parfum ou le cadeau parfait selon ton style, ton budget et tes envies.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/style" className="btn-primary">Découvrir mon style <Search className="h-4 w-4" /></Link>
+              <Link href="/guides" className="btn-secondary">Voir les guides <BookOpen className="h-4 w-4" /></Link>
+            </div>
+            <div className="mt-8 grid max-w-xl grid-cols-3 gap-3 text-xs font-semibold text-[#594C45]">
+              {['Recommandations transparentes', 'Produits réels', 'Sélection intelligente'].map((item) => (
+                <div key={item} className="rounded-2xl border border-[#EADFD6] bg-white/60 p-3">
+                  <BadgeCheck className="mb-2 h-4 w-4 text-[#C98278]" />
+                  {item}
                 </div>
-                <p className="text-[#2C2C2C] leading-relaxed mb-5 text-sm">
-                  &ldquo;{testimonial.text}&rdquo;
-                </p>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium text-[#1A1A1A] text-sm">{testimonial.name}</p>
-                    <p className="text-xs text-[#8C7B6B]">{testimonial.age}</p>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="absolute -right-10 -top-10 h-56 w-56 rounded-full bg-[#E8C6BD]/40 blur-3xl" />
+            <div className="relative overflow-hidden rounded-[2.5rem] border border-[#EADFD6] bg-white shadow-card">
+              <img src="/brand/yyfmm-hero.svg" alt="Yayoo Femme YYFMM — expérience shopping féminin" className="h-auto w-full" />
+            </div>
+            <div className="absolute -bottom-7 left-4 right-4 rounded-[2rem] border border-[#EADFD6] bg-white/95 p-4 shadow-card backdrop-blur md:left-8 md:right-8">
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-sm font-bold text-[#171717]">Sélection personnalisée</span>
+                <span className="label-affiliate">Liens clairs</span>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                {['Style', 'Beauté', 'Cadeaux'].map((item) => (
+                  <div key={item} className="rounded-2xl bg-[#FAF7F3] p-3 text-center text-xs font-semibold text-[#594C45]">{item}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="decouvrir" className="section bg-white">
+        <div className="container-wide">
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-[#C98278]">Découvrir</p>
+            <h2 className="font-serif text-4xl text-[#171717] md:text-5xl">5 expériences pour mieux acheter</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-[#8B7B70]">Chaque finder doit guider l’utilisatrice vers une décision simple, désirable et monétisable.</p>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {modules.map((mod) => {
+              const Icon = mod.icon
+              return (
+                <Link key={mod.href} href={mod.href} className="card-hover group block p-5">
+                  <div className="mb-5 overflow-hidden rounded-[1.5rem] border border-[#EADFD6] bg-[#FAF7F3]">
+                    <img src={mod.image} alt={`${mod.title} Yayoo Femme`} className="h-auto w-full transition-transform duration-500 group-hover:scale-105" />
                   </div>
-                  <span className="text-xs bg-[#F2E8E4] text-[#A67060] px-2 py-1 rounded-full">
-                    {testimonial.module}
-                  </span>
-                </div>
+                  <Icon className="mb-3 h-5 w-5 text-[#C98278]" />
+                  <h3 className="font-serif text-2xl text-[#171717]">{mod.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[#8B7B70]">{mod.description}</p>
+                  <div className="mt-5 text-sm font-bold text-[#C98278]">Commencer →</div>
+                </Link>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="section bg-[#FAF7F3]">
+        <div className="container-wide">
+          <div className="mb-12 text-center">
+            <h2 className="font-serif text-4xl text-[#171717] md:text-5xl">Comment ça marche ?</h2>
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            {[
+              ['01', 'Réponds aux questions', 'Un quiz rapide pour comprendre ton style, tes besoins et ton budget.'],
+              ['02', 'L’IA analyse ton profil', 'L’algorithme croise tes réponses avec le catalogue, les offres et les règles de transparence.'],
+              ['03', 'Reçois ta sélection', 'Une sélection personnalisée avec des explications claires pour chaque produit.'],
+            ].map(([step, title, text]) => (
+              <div key={step} className="card p-7 text-center">
+                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-[#EADFD6] bg-[#FAF7F3] text-sm font-black text-[#C98278]">{step}</div>
+                <h3 className="font-serif text-2xl text-[#171717]">{title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#8B7B70]">{text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Deals teaser */}
       <section className="section bg-white">
-        <div className="container-wide">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8 p-8 md:p-12 rounded-3xl gradient-warm">
-            <div>
-              <div className="text-sm font-medium text-[#A67060] mb-2">Nouveau chaque semaine</div>
-              <h2 className="font-serif text-3xl text-[#1A1A1A] mb-3">
-                Les meilleurs bons plans
-              </h2>
-              <p className="text-[#8C7B6B]">
-                Promotions, codes promo exclusifs et offres triées sur le volet — sans spam.
-              </p>
+        <div className="container-wide grid items-center gap-10 md:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-[#C98278]">Guides & ebooks</p>
+            <h2 className="font-serif text-4xl text-[#171717] md:text-6xl">Guides & Ebooks premium</h2>
+            <p className="mt-5 max-w-xl text-lg font-medium leading-relaxed text-[#8B7B70]">Des contenus utiles pour t’aider à mieux choisir, mieux acheter et construire ton style.</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/guides" className="btn-primary">Tous les guides</Link>
+              <Link href="/pricing" className="btn-secondary">Voir les offres</Link>
             </div>
-            <Link href="/deals" className="btn-accent whitespace-nowrap">
-              Voir les bons plans
-            </Link>
+          </div>
+          <div className="card p-5">
+            <img src="/brand/yyfmm-guides.svg" alt="Guides et ebooks premium Yayoo Femme" className="w-full rounded-[1.5rem]" />
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              {guides.map((guide) => (
+                <Link key={guide.title} href={guide.href} className="rounded-3xl border border-[#EADFD6] bg-[#FAF7F3] p-4 transition-colors hover:bg-white">
+                  <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#8B7B70]">{guide.category}</div>
+                  <h3 className="mt-2 font-serif text-xl text-[#171717]">{guide.title}</h3>
+                  <div className="mt-4 flex items-center justify-between text-sm font-black"><span>{guide.price}</span><span className="text-[#C98278]">Voir →</span></div>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Guides */}
-      <section className="section bg-[#FAF8F5]">
+      <section id="offres" className="section bg-[#171717] text-white">
         <div className="container-wide">
-          <div className="text-center mb-14">
-            <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A] mb-4">
-              Guides & Ebooks premium
-            </h2>
-            <p className="text-[#8C7B6B] max-w-xl mx-auto">
-              Des guides créés par des expertes mode et beauté pour approfondir ton style.
-            </p>
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-[#E8C6BD]">Offres</p>
+            <h2 className="font-serif text-4xl md:text-5xl">Monétisation prête pour la pub</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-[#D6C4B8]">Gratuit pour attirer, Premium pour convertir, Experte pour augmenter la valeur client.</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {[
-              { title: 'Le dressing capsule parfait', category: 'Mode', price: '9€', emoji: '👗' },
-              { title: 'Routine anti-âge naturelle', category: 'Beauté', price: '7€', emoji: '✨' },
-              { title: '50 idées cadeaux pour femme', category: 'Cadeaux', price: 'Gratuit', emoji: '🎁' },
-            ].map((guide) => (
-              <div key={guide.title} className="card p-6">
-                <div className="text-3xl mb-4">{guide.emoji}</div>
-                <div className="text-xs text-[#8C7B6B] uppercase tracking-wider mb-2">{guide.category}</div>
-                <h3 className="font-serif text-lg text-[#1A1A1A] mb-4">{guide.title}</h3>
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-[#1A1A1A]">{guide.price}</span>
-                  <Link href="/guides" className="text-sm text-[#C9978A] hover:text-[#A67060]">
-                    Voir →
-                  </Link>
-                </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            {offers.map((offer) => (
+              <div key={offer.name} className={`rounded-[2rem] border p-7 ${offer.featured ? 'border-[#C98278] bg-white text-[#171717]' : 'border-white/15 bg-white/5 text-white'}`}>
+                {offer.featured && <span className="label-sponsored mb-4">Recommandé</span>}
+                <h3 className="font-serif text-3xl">{offer.name}</h3>
+                <div className="mt-3 text-3xl font-black">{offer.price}</div>
+                <p className={`mt-3 text-sm leading-relaxed ${offer.featured ? 'text-[#8B7B70]' : 'text-[#D6C4B8]'}`}>{offer.description}</p>
+                <ul className="mt-6 space-y-3 text-sm">
+                  {offer.features.map((feature) => (
+                    <li key={feature} className="flex gap-2"><ShieldCheck className="h-4 w-4 shrink-0 text-[#C98278]" /> {feature}</li>
+                  ))}
+                </ul>
+                <Link href={offer.href} className={offer.featured ? 'btn-accent mt-7 w-full' : 'mt-7 inline-flex w-full items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10'}>{offer.cta}</Link>
               </div>
             ))}
           </div>
-          <div className="text-center mt-8">
-            <Link href="/guides" className="btn-secondary">
-              Tous les guides
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Pricing teaser */}
-      <section className="section bg-[#1A1A1A] text-[#FAF8F5]">
-        <div className="container-tight text-center">
-          <h2 className="font-serif text-3xl md:text-4xl mb-4">
-            Passe au niveau supérieur
-          </h2>
-          <p className="text-[#BEA98C] mb-8 max-w-xl mx-auto">
-            Accède aux sélections complètes, sauvegarde ta wishlist et reçois des recommandations illimitées.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/pricing" className="btn-accent">
-              Voir les offres à partir de 3,90€
-            </Link>
-            <Link href="/account" className="inline-flex items-center justify-center px-6 py-3 border border-[#FAF8F5]/30 text-[#FAF8F5] rounded-full text-sm font-medium hover:bg-white/10 transition-colors">
-              Créer un compte gratuit
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Transparency */}
       <section className="section bg-white">
-        <div className="container-tight">
-          <div className="text-center mb-10">
-            <h2 className="font-serif text-2xl text-[#1A1A1A] mb-3">Notre engagement transparence</h2>
+        <div className="container-wide grid gap-10 md:grid-cols-[1fr_0.9fr]">
+          <div>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-[#C98278]">Liens & API</p>
+            <h2 className="font-serif text-4xl text-[#171717] md:text-5xl">Prêt pour affiliation, pixels et catalogue</h2>
+            <p className="mt-5 text-lg font-medium leading-relaxed text-[#8B7B70]">La structure est prête pour brancher les liens partenaires, les clés API et les pixels publicitaires sans exposer les secrets côté client.</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {affiliatePartners.map((item) => <span key={item} className="label-affiliate">{item}</span>)}
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div className="grid gap-4">
             {[
-              { emoji: '🔗', title: 'Liens affiliés', text: 'Certains liens sont affiliés. Nous le signalons toujours clairement sur chaque produit.' },
-              { emoji: '🏷️', title: 'Contenu sponsorisé', text: "Les produits sponsorisés sont toujours clairement indiqués avec le label 'Sponsorisé'." },
-              { emoji: '🤖', title: 'IA transparente', text: "Notre IA ne recommande que des produits réels de notre catalogue. Aucune invention." },
-            ].map((item) => (
-              <div key={item.title} className="p-6 rounded-3xl bg-[#FAF8F5]">
-                <div className="text-3xl mb-3">{item.emoji}</div>
-                <h3 className="font-semibold text-[#1A1A1A] mb-2">{item.title}</h3>
-                <p className="text-sm text-[#8C7B6B] leading-relaxed">{item.text}</p>
+              ['Liens affiliés', 'Chaque produit peut porter un label affilié clair et un lien tracké.'],
+              ['Contenu sponsorisé', 'Les placements payants sont séparés et indiqués proprement.'],
+              ['IA transparente', 'Les recommandations doivent venir du catalogue réel, pas de produits inventés.'],
+            ].map(([title, text]) => (
+              <div key={title} className="card p-6">
+                <Lock className="mb-3 h-5 w-5 text-[#C98278]" />
+                <h3 className="font-serif text-2xl text-[#171717]">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#8B7B70]">{text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="section bg-[#FAF8F5]">
-        <div className="container-tight">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl text-[#1A1A1A] mb-3">Questions fréquentes</h2>
-          </div>
-          <div className="space-y-4 max-w-2xl mx-auto">
-            {faqs.map((faq) => (
-              <div key={faq.q} className="card p-6">
-                <h3 className="font-semibold text-[#1A1A1A] mb-3">{faq.q}</h3>
-                <p className="text-sm text-[#8C7B6B] leading-relaxed">{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="section bg-white">
+      <section className="section bg-[#FAF7F3]">
         <div className="container-tight text-center">
-          <h2 className="font-serif text-3xl md:text-5xl text-[#1A1A1A] mb-6">
-            Prête à trouver ce qui te correspond vraiment ?
-          </h2>
-          <Link href="/style" className="btn-primary text-base px-8 py-4">
-            Commencer maintenant — c&apos;est gratuit
-          </Link>
+          <div className="mx-auto mb-6 flex w-max items-center gap-1 rounded-full border border-[#EADFD6] bg-white px-4 py-2 text-[#C98278]">
+            {Array.from({ length: 5 }).map((_, index) => <Star key={index} className="h-4 w-4 fill-current" />)}
+          </div>
+          <h2 className="font-serif text-4xl text-[#171717] md:text-6xl">Prête à lancer les pubs ?</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-lg font-medium leading-relaxed text-[#8B7B70]">Yayoo Femme est maintenant positionné comme une expérience féminine premium : claire, utile, désirable et transparente.</p>
+          <Link href="/style" className="btn-primary mt-8">Commencer maintenant</Link>
         </div>
       </section>
     </>
