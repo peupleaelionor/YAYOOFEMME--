@@ -6,86 +6,87 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 const navigation = [
-  { label: 'Style', href: '/style' },
-  { label: 'Beauté', href: '/beauty' },
-  { label: 'Cadeaux', href: '/gifts' },
-  { label: 'Parfum', href: '/perfume' },
-  { label: 'Capsule', href: '/capsule' },
-  { label: 'Bons plans', href: '/deals' },
+  { label: 'Découvrir', href: '/' },
   { label: 'Guides', href: '/guides' },
+  { label: 'Offres', href: '/pricing' },
+  { label: 'Mon compte', href: '/account' },
+]
+
+const mobileNavigation = [
+  { label: 'Découvrir', href: '/' },
+  { label: 'Style Finder', href: '/style' },
+  { label: 'Beauty Finder', href: '/beauty' },
+  { label: 'Gift Finder', href: '/gifts' },
+  { label: 'Perfume Finder', href: '/perfume' },
+  { label: 'Dressing Capsule', href: '/capsule' },
+  { label: 'Guides', href: '/guides' },
+  { label: 'Offres', href: '/pricing' },
+  { label: 'Mon compte', href: '/account' },
 ]
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-sm border-b border-[#EDE4D6]">
+    <header className="sticky top-0 z-50 border-b border-[#EADFD6] bg-[#FAF7F3]/95 backdrop-blur-xl">
       <div className="container-wide">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="font-serif text-xl font-semibold text-[#1A1A1A] tracking-wide">
-              Yayoo Femme
-            </span>
+        <div className="flex h-18 items-center justify-between py-3">
+          <Link href="/" className="flex flex-col leading-none" onClick={() => setMobileOpen(false)}>
+            <span className="font-serif text-2xl font-semibold tracking-tight text-[#171717]">Yayoo Femme</span>
+            <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#C98278]">YYFMM</span>
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden items-center gap-2 md:flex">
             {navigation.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-4 py-2 text-sm text-[#2C2C2C] hover:text-[#1A1A1A] rounded-full hover:bg-[#F5F0E8] transition-colors"
+                className="rounded-full px-4 py-2 text-sm font-medium text-[#594C45] transition-colors hover:bg-white hover:text-[#171717]"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          {/* Actions */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link href="/pricing">
-              <Button variant="ghost" size="sm">Offres</Button>
-            </Link>
-            <Link href="/account">
-              <Button size="sm">Mon compte</Button>
+          <div className="hidden items-center gap-3 md:flex">
+            <Link href="/style">
+              <Button size="sm" className="rounded-full bg-[#171717] px-5 text-white hover:bg-[#2C2C2C]">Style Finder</Button>
             </Link>
           </div>
 
-          {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 rounded-full hover:bg-[#F5F0E8]"
+            className="rounded-full p-2 transition-colors hover:bg-white md:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Menu"
+            aria-label={mobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-expanded={mobileOpen}
           >
-            <div className="space-y-1.5 w-5">
-              <span className={cn('block h-0.5 bg-[#1A1A1A] transition-all', mobileOpen && 'rotate-45 translate-y-2')} />
-              <span className={cn('block h-0.5 bg-[#1A1A1A] transition-all', mobileOpen && 'opacity-0')} />
-              <span className={cn('block h-0.5 bg-[#1A1A1A] transition-all', mobileOpen && '-rotate-45 -translate-y-2')} />
+            <div className="w-7 space-y-1.5">
+              <span className={cn('block h-0.5 bg-[#171717] transition-all', mobileOpen && 'translate-y-2 rotate-45')} />
+              <span className={cn('block h-0.5 bg-[#171717] transition-all', mobileOpen && 'opacity-0')} />
+              <span className={cn('block h-0.5 bg-[#171717] transition-all', mobileOpen && '-translate-y-2 -rotate-45')} />
             </div>
           </button>
         </div>
 
-        {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden py-4 border-t border-[#EDE4D6] animate-[fadeIn_0.2s_ease-out]">
+          <div className="md:hidden border-t border-[#EADFD6] py-5 animate-[fadeIn_0.2s_ease-out]">
             <nav className="flex flex-col gap-1">
-              {navigation.map((item) => (
+              {mobileNavigation.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="px-4 py-3 text-sm text-[#2C2C2C] hover:text-[#1A1A1A] rounded-xl hover:bg-[#F5F0E8] transition-colors"
+                  className="rounded-2xl px-4 py-3 text-base font-semibold text-[#171717] transition-colors hover:bg-white"
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="pt-3 flex flex-col gap-2">
+              <div className="mt-4 grid gap-3">
                 <Link href="/pricing" onClick={() => setMobileOpen(false)}>
-                  <Button variant="outline" size="sm" className="w-full">Offres</Button>
+                  <Button variant="outline" size="sm" className="w-full rounded-full border-[#EADFD6] bg-transparent">Offres</Button>
                 </Link>
                 <Link href="/account" onClick={() => setMobileOpen(false)}>
-                  <Button size="sm" className="w-full">Mon compte</Button>
+                  <Button size="sm" className="w-full rounded-full bg-[#171717] text-white">Mon compte</Button>
                 </Link>
               </div>
             </nav>
