@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ScoreBar } from '@/components/ui/score-bar'
@@ -18,6 +18,13 @@ interface ProductCardProps {
 export function ProductCard({ product, showScores = false, onWishlist, onBuy }: ProductCardProps) {
   const [wishlisted, setWishlisted] = useState(false)
   const [wishlistLoading, setWishlistLoading] = useState(false)
+
+  useEffect(() => {
+    fetch(`/api/wishlist?productId=${encodeURIComponent(product.id)}`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => { if (data) setWishlisted(data.inWishlist === true) })
+      .catch(() => {})
+  }, [product.id])
 
   const handleBuy = async () => {
     if (onBuy) {
