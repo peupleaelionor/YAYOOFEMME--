@@ -1,37 +1,40 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://yyfmm.vercel.app'
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://fmmyy.com'),
+  metadataBase: new URL(appUrl),
   title: {
-    default: "Yayoo Femme - Assistant d'achat féminin intelligent",
+    default: 'Yayoo Femme — Assistant shopping mode, beauté, parfum et cadeaux',
     template: '%s | Yayoo Femme',
   },
-  description: "Yayoo Femme t'aide à trouver les bons produits mode, beauté, parfum, bijoux, maison et cadeaux selon ton style, ton budget et ton moment de vie.",
-  keywords: ['mode femme', 'beauté', 'parfum', 'cadeaux femme', 'style féminin', 'recommandations IA', 'shopping intelligent'],
+  description: "Yayoo Femme t'aide à trouver des idées mode, beauté, parfum et cadeaux selon ton style, ton budget et tes envies.",
+  keywords: ['Yayoo Femme', 'YYFMM', 'mode femme', 'beauté', 'parfum', 'cadeaux femme', 'style féminin', 'shopping intelligent', 'assistant IA shopping'],
   authors: [{ name: 'Yayoo Femme' }],
-  creator: 'Yayoo Femme',
+  creator: 'YYFMM',
+  applicationName: 'Yayoo Femme',
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    url: 'https://fmmyy.com',
+    url: appUrl,
     siteName: 'Yayoo Femme',
-    title: "Yayoo Femme - Assistant d'achat féminin intelligent",
-    description: 'Trouve ce qui te correspond vraiment. Mode, beauté, parfum, cadeaux selon ton style et ton budget.',
+    title: 'Yayoo Femme — Ton assistant d’achat féminin intelligent',
+    description: 'Mode, beauté, parfum, cadeaux : des sélections personnalisées, utiles et transparentes.',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/brand/yyfmm-og.svg',
         width: 1200,
         height: 630,
-        alt: 'Yayoo Femme',
+        alt: 'Yayoo Femme — YYFMM',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Yayoo Femme - Assistant d'achat féminin intelligent",
-    description: 'Trouve ce qui te correspond vraiment. Mode, beauté, parfum, cadeaux selon ton style et ton budget.',
-    images: ['/og-image.jpg'],
+    title: 'Yayoo Femme — Assistant shopping féminin',
+    description: 'Ton assistant mode, beauté, parfum et cadeaux.',
+    images: ['/brand/yyfmm-og.svg'],
   },
   robots: {
     index: true,
