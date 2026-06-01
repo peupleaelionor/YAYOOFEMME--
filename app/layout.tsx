@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     description: 'Mode, beauté, parfum, cadeaux : des sélections personnalisées, utiles et transparentes.',
     images: [
       {
-        url: '/brand/yyfmm-og.svg',
+        url: '/brand/og.jpg',
         width: 1200,
         height: 630,
         alt: 'Yayoo Femme — YYFMM',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Yayoo Femme — Assistant shopping féminin',
     description: 'Ton assistant mode, beauté, parfum et cadeaux.',
-    images: ['/brand/yyfmm-og.svg'],
+    images: ['/brand/og.jpg'],
   },
   robots: {
     index: true,

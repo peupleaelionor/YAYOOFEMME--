@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 const navigation = [
-  { label: 'Découvrir', href: '/' },
+  { label: 'Découvrir', href: '/#decouvrir' },
   { label: 'Guides', href: '/guides' },
   { label: 'Offres', href: '/pricing' },
+  { label: 'Transparence', href: '/#transparence' },
   { label: 'Mon compte', href: '/account' },
 ]
 
