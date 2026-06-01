@@ -38,10 +38,10 @@ export function Footer() {
             <h4 className="text-xs font-semibold uppercase tracking-widest text-[#8C7B6B] mb-4">Ressources</h4>
             <ul className="space-y-2.5">
               {[
-                { label: 'Guides & Ebooks', href: '/guides' },
-                { label: 'Catalogue produits', href: '/products' },
-                { label: 'Tarifs', href: '/pricing' },
-                { label: 'B2B Marques', href: '/business' },
+                { label: 'Guides', href: '/guides' },
+                { label: 'Ebooks', href: '/guides' },
+                { label: 'Offres', href: '/pricing' },
+                { label: 'Bons plans', href: '/deals' },
               ].map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className="text-sm text-[#8C7B6B] hover:text-[#1A1A1A] transition-colors">
