@@ -34,6 +34,8 @@ export default function ResultPage() {
     const stored = sessionStorage.getItem('recommendation')
     if (stored) {
       try {
+        // Syncing React state from an external store (sessionStorage) on mount.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setData(JSON.parse(stored))
       } catch {
         // ignore parse errors
